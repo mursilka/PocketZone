@@ -14,7 +14,15 @@ public class InventorySlot : MonoBehaviour
     private bool isOccupied; // Флаг, указывающий, занят ли слот
 
     public ItemData CurrentItemData { get { return currentItemData; } }
-    public int CurrentStackCount { get { return currentStackCount; } }
+    public int CurrentStackCount
+    {
+        get { return currentStackCount; }
+        set
+        {
+            currentStackCount = value;
+            UpdateItemCountDisplay(); // Обновляем количество предметов при изменении
+        }
+    }
 
     void Start()
     {
@@ -30,8 +38,7 @@ public class InventorySlot : MonoBehaviour
             // то увеличиваем количество в стаке до максимального размера стака
             if (currentStackCount < newItem.itemData.stackSize)
             {
-                currentStackCount++;
-                UpdateItemCountDisplay(); // Используем метод для обновления отображения
+                CurrentStackCount++; // Используем свойство для обновления количества
             }
             else
             {
@@ -41,7 +48,7 @@ public class InventorySlot : MonoBehaviour
         else
         {
             currentItemData = newItem.itemData; // Получаем данные о предмете из ItemData
-            currentStackCount = 1; // Начинаем новый стак с одного предмета
+            CurrentStackCount = 1; // Начинаем новый стак с одного предмета
             UpdateItemDisplay(); // Обновляем отображение предмета
         }
 
